@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<!--    도로 상태 색상-->
+    <color name="route_unknown">#E67F7E79</color>
+    <color name="route_block">#FD382A</color>
+    <color name="route_jam">#FD382A</color>
+    <color name="route_delay">#F7AB17</color>
+    <color name="route_slow">#F0D300</color>
+    <color name="route_normal">#3BD72C</color>
+    <color name="stroke_color">#FFFFFF</color>
+
 </resources>
