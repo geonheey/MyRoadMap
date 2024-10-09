@@ -66,4 +66,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+//    스플래시 화면
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 }
