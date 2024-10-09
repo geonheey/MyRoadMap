@@ -1,4 +1,4 @@
-package com.example.kakaoroadmap
+package com.example.myroadmap
 
 import org.junit.Test
 

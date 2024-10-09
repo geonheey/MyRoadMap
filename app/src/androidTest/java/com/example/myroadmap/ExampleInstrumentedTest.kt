@@ -1,4 +1,4 @@
-package com.example.kakaoroadmap
+package com.example.myroadmap
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

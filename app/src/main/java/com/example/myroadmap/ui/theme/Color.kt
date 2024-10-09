@@ -1,4 +1,4 @@
-package com.example.kakaoroadmap.ui.theme
+package com.example.myroadmap.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

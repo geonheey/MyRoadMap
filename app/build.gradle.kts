@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kakaoroadmap"
+    namespace = "com.example.myroadmap"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.kakaoroadmap"
+        applicationId = "com.example.myroadmap"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -18,6 +18,13 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        ndk {
+            abiFilters.add("arm64-v8a")
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("x86")
+            abiFilters.add("x86_64")
+        }
+
     }
 
     buildTypes {
@@ -49,6 +56,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -59,6 +67,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.maps)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,6 +78,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 //    스플래시 화면
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation(libs.androidx.core.splashscreen)
+
+    // 카카오맵
+    implementation ("com.kakao.maps.open:android:2.11.9")
 
 }

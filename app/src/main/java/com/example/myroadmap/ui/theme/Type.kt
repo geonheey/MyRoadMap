@@ -1,4 +1,4 @@
-package com.example.kakaoroadmap.ui.theme
+package com.example.myroadmap.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
