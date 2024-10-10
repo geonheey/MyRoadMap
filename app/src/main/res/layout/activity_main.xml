@@ -32,14 +32,14 @@
             android:id="@+id/timeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="@color/distance_time_text"/>
 
         <TextView
             android:id="@+id/distanceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="@color/distance_time_text"/>
 
 
