@@ -43,7 +43,6 @@ fun LocationBottomSheet(
 
             Button(onClick = {
                 onRouteCheck(location.origin, location.destination) {
-                    // Activity 시작
                     val intent = Intent(context, MapActivity::class.java).apply {
                         putExtra("ORIGIN", location.origin)
                         putExtra("DESTINATION", location.destination)

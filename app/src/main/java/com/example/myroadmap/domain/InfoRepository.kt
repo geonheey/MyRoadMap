@@ -44,11 +44,11 @@ class InfoRepository(private val apiService: ApiService) {
                 if (response.isSuccessful) {
                     response.body() ?: emptyList()
                 } else {
-                    Log.e("API_ERROR", "Error fetching routes: ${response.message()}")
+                    Log.e("API_ERROR2", "Error fetching routes: ${response.message()}")
                     emptyList()
                 }
             } catch (e: Exception) {
-                Log.e("API_ERROR", "Error: ${e}")
+                Log.e("API_ERROR", "Error: ${e.message}")
                 emptyList()
             }
         }

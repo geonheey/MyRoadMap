@@ -62,9 +62,7 @@ fun TaxiApp() {
     var showNoRoutesDialog by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Taxi Locations") })
-        }
+
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -99,7 +97,7 @@ fun TaxiApp() {
                                 onSuccess()
                             }
                         } catch (e: Exception) {
-                            Log.e("API_ERROR", "Error fetching routes: ${e.message}")
+                            Log.e("API_ERROR1", "Error fetching routes: ${e.message}")
                         }
                     }
                 }

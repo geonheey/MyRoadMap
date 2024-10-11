@@ -41,12 +41,12 @@ fun markRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Contex
 
             val originStyles = LabelStyles.from(
                 "originStyleId",
-                LabelStyle.from(R.drawable.ic_kakaomap_origin).setZoomLevel(1)
+                LabelStyle.from(R.drawable.ic_origin_mark).setZoomLevel(1)
             )
 
             val destinationStyles = LabelStyles.from(
                 "destinationStyleId",
-                LabelStyle.from(R.drawable.ic_kakaomap_destination).setZoomLevel(1)
+                LabelStyle.from(R.drawable.ic_destination_mark).setZoomLevel(1)
             )
 
             val labelManager = kakaoMap?.labelManager

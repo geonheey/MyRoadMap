@@ -46,7 +46,7 @@ fun displayRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Con
             else -> R.color.stroke_color
         }
 
-        val color = ContextCompat.getColor(context, colorResId) // 실제 색상 값
+        val color = ContextCompat.getColor(context, colorResId)
 
         val styles = RouteLineStyles.from(RouteLineStyle.from(16F, color))
 
