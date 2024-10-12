@@ -19,7 +19,7 @@ class InfoViewModel(private val locationRepository: InfoRepository) : ViewModel(
         viewModelScope.launch {
             val locations = locationRepository.fetchLocations(authKey)
             _locations.value = locations
-            Log.d("API_SUCCESS1", "Locations: $locations")
+            Log.d("API_SUCCESS", "Locations: $locations")
         }
     }
 
@@ -29,7 +29,7 @@ class InfoViewModel(private val locationRepository: InfoRepository) : ViewModel(
         destination: String
     ): List<RouteResponse> {
         return locationRepository.fetchRoutes(authKey, origin, destination).also {
-            Log.d("API_SUCCESS2", "Routes: $it")
+            Log.d("API_SUCCESS", "Routes: $it")
         }
     }
 
@@ -41,7 +41,7 @@ class InfoViewModel(private val locationRepository: InfoRepository) : ViewModel(
     ): DistanceTimeResponse {
         return locationRepository.fetchDistanceTime(authKey, origin, destination)
             .also { (dist, time) ->
-                Log.d("API_SUCCESS3", "Distance: $dist, Time: $time")
+                Log.d("API_SUCCESS", "Distance: $dist, Time: $time")
             }
     }
 
