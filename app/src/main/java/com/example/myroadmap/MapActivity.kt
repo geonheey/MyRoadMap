@@ -64,7 +64,7 @@ class MapActivity : ComponentActivity() {
                                 infoUtils(distance, time)
                             }
                         } catch (e: Exception) {
-                            Log.e("API_ERROR", "Error fetching routes: ${e.message}")
+                            Log.e("API_ERROR5", "${e.message}")
                         }
                     }
                 }

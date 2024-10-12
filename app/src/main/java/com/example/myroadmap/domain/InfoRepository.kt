@@ -2,9 +2,11 @@ package com.example.myroadmap.domain
 
 import android.util.Log
 import com.example.myroadmap.data.remote.model.DistanceTimeResponse
+import com.example.myroadmap.data.remote.model.ErrorResponse
 import com.example.myroadmap.data.remote.model.Location
 import com.example.myroadmap.data.remote.model.RouteResponse
 import com.example.myroadmap.data.service.ApiService
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -37,22 +39,27 @@ class InfoRepository(private val apiService: ApiService) {
         destination: String
     ): List<RouteResponse> {
         return withContext(Dispatchers.IO) {
-
             try {
                 val response = apiService.getRoutes(authKey, origin, destination).execute()
 
                 if (response.isSuccessful) {
                     response.body() ?: emptyList()
                 } else {
-                    Log.e("API_ERROR2", "Error fetching routes: ${response.message()}")
-                    emptyList()
+                    val errorBody = response.errorBody()?.string()
+                    val errorResponse = errorBody?.let {
+                        Gson().fromJson(it, ErrorResponse::class.java)
+                    }
+                    Log.e("API_ERROR", "Error Code: ${errorResponse?.code}, Message: ${errorResponse?.message}")
+                    throw Exception("Error Code: ${errorResponse?.code}, Message: ${errorResponse?.message}")
                 }
             } catch (e: Exception) {
-                Log.e("API_ERROR", "Error: ${e.message}")
-                emptyList()
+                Log.e("API_ERROR4", "Exception occurred: ${e.message}")
+                throw Exception("Error fetching routes: ${e.message}")
             }
         }
     }
+
+
 
     // 거리 및 시간 조회
     suspend fun fetchDistanceTime(

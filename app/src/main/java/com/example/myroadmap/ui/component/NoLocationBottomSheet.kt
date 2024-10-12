@@ -1,7 +1,5 @@
 package com.example.myroadmap.ui.component
 
-import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,21 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.myroadmap.MapActivity
 import com.example.myroadmap.data.remote.model.Location
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LocationBottomSheet(
+fun NoLacationBottomSheet(
     location: Location,
-    onDismiss: () -> Unit,
-    onRouteCheck: (String, String, () -> Unit) -> Unit
+    errorCode: Int,
+    errorMessage: String,
+    onDismiss: () -> Unit
 ) {
-    val context = LocalContext.current
-
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
@@ -40,7 +35,7 @@ fun LocationBottomSheet(
                 .fillMaxWidth()
         ) {
             Text(
-                text = "경로 조회 결과",
+                text = "경로 조회 실패",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 textAlign = TextAlign.Center,
@@ -48,9 +43,12 @@ fun LocationBottomSheet(
             )
 
             Box(
-                modifier = Modifier.fillMaxWidth().padding(vertical=8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
                 contentAlignment = Alignment.Center,
             ) {
+
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "출발지: ${location.origin}",
@@ -61,30 +59,27 @@ fun LocationBottomSheet(
                         text = "도착지: ${location.destination}",
                         style = MaterialTheme.typography.bodyLarge,
                     )
+                    Text(
+                        text = "Error Code: $errorCode",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                    Text(
+                        text = "Error Message: $errorMessage",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
                 }
             }
-
-            Log.d(
-                "API_SUCCESS6",
-                "Origin: ${location.origin}, Destination: ${location.destination}"
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {
-                    onRouteCheck(location.origin, location.destination) {
-                        val intent = Intent(context, MapActivity::class.java).apply {
-                            putExtra("ORIGIN", location.origin)
-                            putExtra("DESTINATION", location.destination)
-                        }
-                        context.startActivity(intent)
-                    }
+                    onDismiss()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onSecondaryContainer )
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onSecondaryContainer)
             ) {
-                Text("경로 확인", color = Color.White)
+                Text("확인", color = Color.White)
             }
         }
     }

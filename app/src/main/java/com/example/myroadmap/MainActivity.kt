@@ -9,12 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,6 +26,7 @@ import com.example.myroadmap.data.service.RetrofitClient
 import com.example.myroadmap.domain.InfoRepository
 import com.example.myroadmap.ui.component.LocationBottomSheet
 import com.example.myroadmap.ui.component.LocationItem
+import com.example.myroadmap.ui.component.NoLacationBottomSheet
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaxiApp() {
@@ -60,20 +58,36 @@ fun TaxiApp() {
     var selectedLocation by remember { mutableStateOf<Location?>(null) }
     var showBottomSheet by remember { mutableStateOf(false) }
     var showNoRoutesDialog by remember { mutableStateOf(false) }
-
-    Scaffold(
-
-    ) { paddingValues ->
+    var errorMessage by remember { mutableStateOf("") }
+    var errorCode by remember { mutableStateOf(0) }
+    Scaffold {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(it)
         ) {
             LazyColumn {
                 items(locations) { location ->
                     LocationItem(location) {
                         selectedLocation = location
-                        showBottomSheet = true
+                        viewModel.viewModelScope.launch {
+                            try {
+                                val routes = viewModel.fetchRoutes(
+                                    authKey,
+                                    location.origin,
+                                    location.destination
+                                )
+                                showBottomSheet = true
+
+                            } catch (e: Exception) {
+                                val errorParts =
+                                    e.message?.split(", ") ?: listOf("0", "Unknown error")
+                                errorCode =
+                                    errorParts[0].substringAfter("Code: ").toIntOrNull() ?: 0
+                                errorMessage = errorParts[1].substringAfter("Message: ")
+                                showNoRoutesDialog = true
+                            }
+                        }
                     }
                 }
             }
@@ -82,22 +96,14 @@ fun TaxiApp() {
         if (showBottomSheet && selectedLocation != null) {
             LocationBottomSheet(
                 location = selectedLocation!!,
-                onDismiss = {
-                    showBottomSheet = false
-                },
+                onDismiss = { showBottomSheet = false },
                 onRouteCheck = { origin, destination, onSuccess ->
                     viewModel.viewModelScope.launch {
                         try {
                             val routes = viewModel.fetchRoutes(authKey, origin, destination)
-                            Log.d("API_SUCCESS5", "Fetched Routes: $routes")
-
-                            if (routes.isEmpty()) {
-                                showNoRoutesDialog = true
-                            } else {
-                                onSuccess()
-                            }
+                            onSuccess()
                         } catch (e: Exception) {
-                            Log.e("API_ERROR1", "Error fetching routes: ${e.message}")
+                            Log.e("API_ERROR", "${e.message}")
                         }
                     }
                 }
@@ -105,17 +111,11 @@ fun TaxiApp() {
         }
 
         if (showNoRoutesDialog) {
-            AlertDialog(
-                onDismissRequest = { showNoRoutesDialog = false },
-                title = { Text("경로 없음") },
-                text = { Text("선택한 위치에 대한 경로가 없습니다.") },
-                confirmButton = {
-                    Button(onClick = {
-                        showNoRoutesDialog = false
-                    }) {
-                        Text("확인")
-                    }
-                }
+            NoLacationBottomSheet(
+                location = selectedLocation!!,
+                errorCode = errorCode,
+                errorMessage = errorMessage,
+                onDismiss = { showNoRoutesDialog = false }
             )
         }
     }

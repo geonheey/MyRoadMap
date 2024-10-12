@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="distance_time_box">#0C196F</color>
     <color name="distance_time_text">#FF9800</color>
-
+    <color name="my_primary">#FF184B36</color>
     <!--    도로 상태 색상-->
     <color name="route_unknown">#E67F7E79</color>
     <color name="route_block">#FD382A</color>
