@@ -3,7 +3,6 @@ package com.example.myroadmap.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.myroadmap.R
@@ -25,20 +24,19 @@ fun displayRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Con
         return
     }
 
+    val allSegments = mutableListOf<RouteLineSegment>()
+
     routes.forEach { route ->
         if (route.points.isEmpty()) {
             return@forEach
         }
 
         val trafficState = route.traffic_state
-
         val points = route.points.split(" ")
         val latLngs = points.map {
             val (lng, lat) = it.split(",").map(String::toDouble)
             LatLng.from(lat, lng)
         }
-
-        val layer = kakaoMap!!.routeLineManager!!.layer
 
         val colorResId = when (trafficState) {
             "UNKNOWN" -> R.color.route_unknown
@@ -51,75 +49,66 @@ fun displayRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Con
         }
 
         val color = ContextCompat.getColor(context, colorResId)
-
         val styles = RouteLineStyles.from(RouteLineStyle.from(16F, color))
 
-        val segments = listOf(
-            RouteLineSegment.from(latLngs, styles)
-        )
-
-        val options = RouteLineOptions.from(segments)
-
-        val routeLine = layer.addRouteLine(options)
-
+        allSegments.add(RouteLineSegment.from(latLngs, styles))
     }
+
+    val options = RouteLineOptions.from(allSegments)
+    kakaoMap?.routeLineManager?.layer?.addRouteLine(options)
 }
 
-
 fun markRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Context) {
-    if (routes.isNotEmpty()) {
-        val allLatLngs = mutableListOf<LatLng>()
+    val allLatLngs = mutableListOf<LatLng>()
 
-        routes.forEach { route ->
-            val points = route.points.split(" ")
-            val latLngs = points.map {
-                val (lng, lat) = it.split(",").map(String::toDouble)
-                LatLng.from(lat, lng)
-            }
-            allLatLngs.addAll(latLngs)
+    routes.forEach { route ->
+        val points = route.points.split(" ")
+        val latLngs = points.map {
+            val (lng, lat) = it.split(",").map(String::toDouble)
+            LatLng.from(lat, lng)
         }
-
-        val latLngArray = allLatLngs.toTypedArray()
-
-        val firstLatLng = latLngArray.first()
-        val lastLatLng = latLngArray.last()
-
-        val boundsBuilder = LatLngBounds.Builder()
-        boundsBuilder.include(firstLatLng)
-        boundsBuilder.include(lastLatLng)
-
-        val bounds = boundsBuilder.build()
-        kakaoMap?.moveCamera(CameraUpdateFactory.fitMapPoints(bounds, 200))
-
-        val originStyles = LabelStyles.from(
-            "originStyleId",
-            LabelStyle.from(R.drawable.ic_origin_mark).setZoomLevel(1)
-        )
-
-        val destinationStyles = LabelStyles.from(
-            "destinationStyleId",
-            LabelStyle.from(R.drawable.ic_destination_mark).setZoomLevel(1)
-        )
-
-        val labelManager = kakaoMap?.labelManager
-        labelManager?.addLabelStyles(originStyles)
-        labelManager?.addLabelStyles(destinationStyles)
-
-        labelManager?.layer?.addLabel(
-            LabelOptions.from(firstLatLng)
-                .setStyles(originStyles)
-        )
-
-        labelManager?.layer?.addLabel(
-            LabelOptions.from(lastLatLng)
-                .setStyles(destinationStyles)
-        )
-
-        displayRoutes(kakaoMap, routes, context)
-
-    } else {
-        Log.d("API_SUCCESS11", "Routes list empty 상태.")
+        allLatLngs.addAll(latLngs)
     }
+
+    val latLngArray = allLatLngs.toTypedArray()
+
+    val firstLatLng = latLngArray.first()
+    val lastLatLng = latLngArray.last()
+
+    val boundsBuilder = LatLngBounds.Builder()
+    boundsBuilder.include(firstLatLng)
+    boundsBuilder.include(lastLatLng)
+
+    val bounds = boundsBuilder.build()
+    kakaoMap?.moveCamera(CameraUpdateFactory.fitMapPoints(bounds, 200))
+
+    val originStyles = LabelStyles.from(
+        "originStyleId",
+        LabelStyle.from(R.drawable.ic_origin_mark).setZoomLevel(1)
+    )
+
+    val destinationStyles = LabelStyles.from(
+        "destinationStyleId",
+        LabelStyle.from(R.drawable.ic_destination_mark).setZoomLevel(1)
+    )
+
+    val labelManager = kakaoMap?.labelManager
+    labelManager?.addLabelStyles(originStyles)
+    labelManager?.addLabelStyles(destinationStyles)
+
+    labelManager?.layer?.addLabel(
+        LabelOptions.from(firstLatLng)
+            .setStyles(originStyles)
+    )
+
+    labelManager?.layer?.addLabel(
+        LabelOptions.from(lastLatLng)
+            .setStyles(destinationStyles)
+    )
+
+    displayRoutes(kakaoMap, routes, context)
+
+
 }
 
 @SuppressLint("DefaultLocale")
