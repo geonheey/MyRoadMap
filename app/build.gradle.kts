@@ -1,7 +1,12 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
+var properties = Properties()
+properties.load(FileInputStream("gradle.properties"))
 
 android {
     namespace = "com.example.myroadmap"
@@ -24,8 +29,12 @@ android {
             abiFilters.add("x86")
             abiFilters.add("x86_64")
         }
-
+        buildConfigField("String", "AUTHORIZATION_KEY", properties.getProperty("AUTHORIZATION_KEY"))
+        buildConfigField("String", "NATIVE_APP_KEY", properties.getProperty("NATIVE_APP_KEY"))
+        manifestPlaceholders["NATIVE_APP_KEY"] = properties["NATIVE_APP_KEY"] as String
     }
+
+
 
     buildTypes {
         release {
@@ -45,6 +54,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

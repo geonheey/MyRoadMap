@@ -2,9 +2,7 @@ package com.example.myroadmap.ui.component
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.myroadmap.MapActivity
-import com.example.myroadmap.data.remote.model.Location
+import com.example.myroadmap.ui.screen.MapActivity
+import com.example.myroadmap.data.model.Location
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

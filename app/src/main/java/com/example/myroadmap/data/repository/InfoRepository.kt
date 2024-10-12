@@ -1,10 +1,10 @@
-package com.example.myroadmap.domain
+package com.example.myroadmap.data.repository
 
 import android.util.Log
-import com.example.myroadmap.data.remote.model.DistanceTimeResponse
-import com.example.myroadmap.data.remote.model.ErrorResponse
-import com.example.myroadmap.data.remote.model.Location
-import com.example.myroadmap.data.remote.model.RouteResponse
+import com.example.myroadmap.data.model.DistanceTimeResponse
+import com.example.myroadmap.data.model.ErrorResponse
+import com.example.myroadmap.data.model.Location
+import com.example.myroadmap.data.model.RouteResponse
 import com.example.myroadmap.data.service.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers

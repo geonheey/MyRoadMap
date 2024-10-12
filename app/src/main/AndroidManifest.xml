@@ -21,8 +21,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <meta-data
-            android:name="com.kakao.sdk.11a77d025bcc6597303aed81d23dd3f1"
-            android:value="11a77d025bcc6597303aed81d23dd3f1" />
+            android:name="com.kakao.sdk.API_KEY"
+            android:value="${NATIVE_APP_KEY}" />
 
         <activity
             android:name=".MainActivity"
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapActivity"
+            android:name=".ui.screen.MapActivity"
             android:exported="true" />
 
 

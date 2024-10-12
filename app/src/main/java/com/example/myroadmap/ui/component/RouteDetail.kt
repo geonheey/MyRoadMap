@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myroadmap.data.remote.model.Location
+import com.example.myroadmap.data.model.Location
 
 @Composable
 fun RouteDetail(location: Location) {

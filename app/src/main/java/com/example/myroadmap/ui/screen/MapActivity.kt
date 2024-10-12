@@ -1,17 +1,18 @@
-package com.example.myroadmap
+package com.example.myroadmap.ui.screen
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.viewModelScope
-import com.example.myroadmap.data.di.InfoViewModel
-import com.example.myroadmap.data.remote.model.RouteResponse
+import com.example.myroadmap.BuildConfig
+import com.example.myroadmap.R
+import com.example.myroadmap.data.repository.InfoRepository
 import com.example.myroadmap.data.service.RetrofitClient
-import com.example.myroadmap.domain.InfoRepository
+import com.example.myroadmap.utils.detailRoutes
 import com.example.myroadmap.utils.displayRoutes
 import com.example.myroadmap.utils.markRoutes
+import com.example.myroadmap.viewmodel.InfoViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.KakaoMapSdk
@@ -24,7 +25,6 @@ class MapActivity : ComponentActivity() {
     private var kakaoMap: KakaoMap? = null
     private lateinit var viewModel: InfoViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,9 +35,11 @@ class MapActivity : ComponentActivity() {
 
         mapView = findViewById(R.id.map_view)
         viewModel = InfoViewModel(InfoRepository(RetrofitClient.instance))
-        val authKey = "069821e7-54a7-4171-8d6d-352936084e18"
+        val authKey = BuildConfig.AUTHORIZATION_KEY
+        val timeTextView = findViewById<TextView>(R.id.timeText)
+        val distanceTextView = findViewById<TextView>(R.id.distanceText)
 
-        KakaoMapSdk.init(this, "11a77d025bcc6597303aed81d23dd3f1")
+        KakaoMapSdk.init(this, BuildConfig.NATIVE_APP_KEY)
 
         mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
@@ -54,14 +56,18 @@ class MapActivity : ComponentActivity() {
                     viewModel.viewModelScope.launch {
                         try {
                             val routes = viewModel.fetchRoutes(authKey, origin, destination)
-                            val (distance, time) = viewModel.fetchDistanceTime(authKey, origin, destination)
+                            val (distance, time) = viewModel.fetchDistanceTime(
+                                authKey,
+                                origin,
+                                destination
+                            )
 
                             if (routes.isEmpty()) {
                                 Log.d("API_SUCCESS8", "No routes found.")
                             } else {
-                                markRoutes(routes)
-                                displayRoutes(routes)
-                                infoUtils(distance, time)
+                                markRoutes(kakaoMap, routes, this@MapActivity)
+                                displayRoutes(kakaoMap, routes, this@MapActivity)
+                                detailRoutes(timeTextView, distanceTextView, distance, time)
                             }
                         } catch (e: Exception) {
                             Log.e("API_ERROR5", "${e.message}")
@@ -73,38 +79,6 @@ class MapActivity : ComponentActivity() {
 
         Log.d("KakaoMap", "MapView initialized")
     }
-
-    private fun displayRoutes(routes: List<RouteResponse>) {
-        displayRoutes(kakaoMap, routes, this)
-    }
-
-    private fun markRoutes(routes: List<RouteResponse>) {
-        markRoutes(kakaoMap, routes, this)
-    }
-    @SuppressLint("DefaultLocale")
-    private fun infoUtils(distanceInMeters: Int, timeInSeconds: Int) {
-        val timeTextView = findViewById<TextView>(R.id.timeText)
-        val distanceTextView = findViewById<TextView>(R.id.distanceText)
-
-        val hours = timeInSeconds / 3600
-        val minutes = (timeInSeconds % 3600) / 60
-        val seconds = timeInSeconds % 60
-
-        val timeString = when {
-            hours > 0 -> String.format("%d 시 %d 분 %d 초", hours, minutes, seconds)
-            minutes > 0 -> String.format("%d 분 %d 초", minutes, seconds)
-            else -> String.format("%d 초", seconds)
-        }
-        val distanceString = if (distanceInMeters >= 1000) {
-            String.format("%.1f km", distanceInMeters / 1000.0)
-        } else {
-            String.format("%d m", distanceInMeters)
-        }
-
-        timeTextView.text = "시간 : $timeString"
-        distanceTextView.text = "거리 : $distanceString"
-    }
-
 
     override fun onResume() {
         super.onResume()

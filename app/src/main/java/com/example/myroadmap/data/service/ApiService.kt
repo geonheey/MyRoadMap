@@ -1,12 +1,11 @@
 package com.example.myroadmap.data.service
 
-import com.example.myroadmap.data.remote.model.DistanceTimeResponse
-import com.example.myroadmap.data.remote.model.LocationResponse
-import com.example.myroadmap.data.remote.model.RouteResponse
+import com.example.myroadmap.data.model.DistanceTimeResponse
+import com.example.myroadmap.data.model.LocationResponse
+import com.example.myroadmap.data.model.RouteResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {

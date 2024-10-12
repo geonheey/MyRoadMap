@@ -58,7 +58,6 @@ val MyTypography = Typography(
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
-    //오류 메세지
     labelSmall = TextStyle(
         fontFamily = font,
         fontWeight = FontWeight.Medium,

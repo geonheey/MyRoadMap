@@ -1,4 +1,4 @@
-package com.example.myroadmap.data.remote.model
+package com.example.myroadmap.data.model
 
 data class DistanceTimeResponse(
     val distance: Int,
