@@ -64,8 +64,6 @@ class InfoRepository(private val apiService: ApiService) {
     }
 
 
-
-
     // 거리 및 시간 조회
     suspend fun fetchDistanceTime(
         authKey: String,

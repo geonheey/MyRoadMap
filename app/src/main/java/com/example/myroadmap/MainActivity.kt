@@ -26,7 +26,7 @@ import com.example.myroadmap.data.service.RetrofitClient
 import com.example.myroadmap.domain.InfoRepository
 import com.example.myroadmap.ui.component.LocationBottomSheet
 import com.example.myroadmap.ui.component.LocationItem
-import com.example.myroadmap.ui.component.NoLacationBottomSheet
+import com.example.myroadmap.ui.theme.MyRoadMapTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -56,67 +56,65 @@ fun TaxiApp() {
 
     val locations by viewModel.locations.collectAsState()
     var selectedLocation by remember { mutableStateOf<Location?>(null) }
-    var showBottomSheet by remember { mutableStateOf(false) }
-    var showNoRoutesDialog by remember { mutableStateOf(false) }
+    var hasRoutes by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     var errorCode by remember { mutableStateOf(0) }
-    Scaffold {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            LazyColumn {
-                items(locations) { location ->
-                    LocationItem(location) {
-                        selectedLocation = location
-                        viewModel.viewModelScope.launch {
-                            try {
-                                val routes = viewModel.fetchRoutes(
-                                    authKey,
-                                    location.origin,
-                                    location.destination
-                                )
-                                showBottomSheet = true
 
-                            } catch (e: Exception) {
-                                val errorParts =
-                                    e.message?.split(", ") ?: listOf("0", "Unknown error")
-                                errorCode =
-                                    errorParts[0].substringAfter("Code: ").toIntOrNull() ?: -1
-                                errorMessage = errorParts[1].substringAfter("Message: ")
-                                showNoRoutesDialog = true
+    MyRoadMapTheme {
+        Scaffold {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                LazyColumn {
+                    items(locations) { location ->
+                        LocationItem(location) {
+                            selectedLocation = location
+                            viewModel.viewModelScope.launch {
+                                try {
+                                    val routes = viewModel.fetchRoutes(
+                                        authKey,
+                                        location.origin,
+                                        location.destination
+                                    )
+                                    hasRoutes = true
+                                } catch (e: Exception) {
+                                    val errorParts = e.message?.split(", ") ?: listOf("0", "Unknown error")
+                                    errorCode = errorParts[0].substringAfter("Code: ").toIntOrNull() ?: -1
+                                    errorMessage = errorParts[1].substringAfter("Message: ")
+                                    hasRoutes = false
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        if (showBottomSheet && selectedLocation != null) {
-            LocationBottomSheet(
-                location = selectedLocation!!,
-                onDismiss = { showBottomSheet = false },
-                onRouteCheck = { origin, destination, onSuccess ->
-                    viewModel.viewModelScope.launch {
-                        try {
-                            val routes = viewModel.fetchRoutes(authKey, origin, destination)
-                            onSuccess()
-                        } catch (e: Exception) {
-                            Log.e("API_ERROR", "${e.message}")
+            if (selectedLocation != null) {
+                LocationBottomSheet(
+                    location = selectedLocation!!,
+                    routesCheck = hasRoutes,
+                    errorCode = if (errorCode != 0) errorCode else null,
+                    errorMessage = errorMessage.ifEmpty { null },
+                    onDismiss = {
+                        hasRoutes = false
+                        selectedLocation = null
+                    },
+                    onRouteCheck = { origin, destination, onSuccess ->
+                        viewModel.viewModelScope.launch {
+                            try {
+                                val routes = viewModel.fetchRoutes(authKey, origin, destination)
+                                onSuccess()
+                                Log.d("API_ERROR", "${selectedLocation}")
+
+                            } catch (e: Exception) {
+                                Log.e("API_ERROR", "${e.message}")
+                            }
                         }
                     }
-                }
-            )
-        }
-
-        if (showNoRoutesDialog) {
-            NoLacationBottomSheet(
-                location = selectedLocation!!,
-                errorCode = errorCode,
-                errorMessage = errorMessage,
-                onDismiss = { showNoRoutesDialog = false }
-            )
+                )
+            }
         }
     }
 }
