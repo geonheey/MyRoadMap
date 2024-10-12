@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myroadmap.data.model.Location
 
 @Composable
-fun RouteDetail(location: Location) {
+fun LocationDetail(location: Location) {
     Row {
         Text(
             text = "출발지: ",

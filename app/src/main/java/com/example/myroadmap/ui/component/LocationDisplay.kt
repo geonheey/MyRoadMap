@@ -39,7 +39,7 @@ fun LocationDisplay(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isSuccessful) {
-                RouteDetail(location)
+                LocationDetail(location)
             } else {
                 Text(
                     text = "[${location.origin}~${location.destination}] : 경로가 존재하지 않습니다.",

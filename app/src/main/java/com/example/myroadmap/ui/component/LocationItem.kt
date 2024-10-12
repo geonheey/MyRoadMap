@@ -23,7 +23,7 @@ fun LocationItem(location: Location, onClick: () -> Unit) {
         color = MaterialTheme.colorScheme.surface
     ) {
         Column {
-            RouteDetail(location)
+            LocationDetail(location)
         }
     }
     Divider(color = Color.LightGray, thickness = 1.dp)
