@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 var properties = Properties()
-properties.load(FileInputStream("gradle.properties"))
+properties.load(FileInputStream("local.properties"))
 
 android {
     namespace = "com.example.myroadmap"
