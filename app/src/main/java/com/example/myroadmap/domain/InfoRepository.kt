@@ -58,7 +58,7 @@ class InfoRepository(private val apiService: ApiService) {
                 }
             } catch (e: Exception) {
                 Log.e("API_ERROR4", "Exception occurred: ${e.message}")
-                throw Exception("Error fetching routes: ${e.message ?: "Unknown error occurred."}")
+                throw Exception("Error fetching routes: ${e.message ?: "경로 조회 API 에러 발생"}")
             }
         }
     }
