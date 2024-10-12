@@ -40,50 +40,28 @@ fun LocationDisplay(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             if (isSuccessful) {
-                Row {
-                    Text(
-                        text = "출발지: ",
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Text(
-                        text = location.origin,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row {
-                    Text(
-                        text = "도착지: ",
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Text(
-                        text = location.destination,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-
+                RouteDetail(location)
             } else {
                 Text(
-                    text = "[${location.origin}~${location.destination}] 경로가 존재하지 않습니다.",
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = "[${location.origin}~${location.destination}] : 경로가 존재하지 않습니다.",
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     text = "Error Code: $errorCode",
                     style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error
                 )
                 Text(
                     text = "Error Message: $errorMessage",
                     style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+
 
             }
+            Spacer(modifier = Modifier.height(16.dp))
 
         }
     }
