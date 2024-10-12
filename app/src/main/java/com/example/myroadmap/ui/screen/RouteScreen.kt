@@ -89,7 +89,7 @@ fun RouteScreen() {
                             try {
                                 val routes = viewModel.fetchRoutes(authKey, origin, destination)
                                 onSuccess()
-                                Log.d("API_ERROR", "${selectedLocation}")
+                                Log.d("API_SUCCESS", "${routes}")
 
                             } catch (e: Exception) {
                                 Log.e("API_ERROR", "${e.message}")
