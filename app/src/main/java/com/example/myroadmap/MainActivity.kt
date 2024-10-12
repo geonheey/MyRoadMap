@@ -83,7 +83,7 @@ fun TaxiApp() {
                                 val errorParts =
                                     e.message?.split(", ") ?: listOf("0", "Unknown error")
                                 errorCode =
-                                    errorParts[0].substringAfter("Code: ").toIntOrNull() ?: 0
+                                    errorParts[0].substringAfter("Code: ").toIntOrNull() ?: -1
                                 errorMessage = errorParts[1].substringAfter("Message: ")
                                 showNoRoutesDialog = true
                             }

@@ -49,15 +49,20 @@ class InfoRepository(private val apiService: ApiService) {
                     val errorResponse = errorBody?.let {
                         Gson().fromJson(it, ErrorResponse::class.java)
                     }
-                    Log.e("API_ERROR", "Error Code: ${errorResponse?.code}, Message: ${errorResponse?.message}")
-                    throw Exception("Error Code: ${errorResponse?.code}, Message: ${errorResponse?.message}")
+
+                    val errorCode = errorResponse?.code ?: -1
+                    val errorMessage = errorResponse?.message ?: "경로 조회 API 에러 발생"
+
+                    Log.e("API_ERROR", "Error Code: $errorCode, Message: $errorMessage")
+                    throw Exception("Error Code: $errorCode, Message: $errorMessage")
                 }
             } catch (e: Exception) {
                 Log.e("API_ERROR4", "Exception occurred: ${e.message}")
-                throw Exception("Error fetching routes: ${e.message}")
+                throw Exception("Error fetching routes: ${e.message ?: "Unknown error occurred."}")
             }
         }
     }
+
 
 
 
