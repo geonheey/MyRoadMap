@@ -27,17 +27,17 @@
 ### UI 패키지
 
 - **component**: UI 구성 요소를 포함합니다.
-  - 'LocationBottomSheet' : 경로 조회 실패 및 성공에 대한 바텀시트 ui
-  - 'LocationBottomSheetContent' : 경로 조회 성공 여부에 따른 바텀 시트의 내용
-  - 'LocationDetail' : 출발지와 도착지에 대한 정보를 알려주는 ui
-  - 'LocationItem' : 출발지와 도착지에 대한 정보를 표시하고 클릭할 수 있는 컴포넌트
-  - 'RouteName' : 지도 상에 출발지와 도착지를 알려주는 컴포넌트
-  - 'TimeDistanceBox' : 지도 상에 경로에 대한 시간과 거리를 알려주는 컴포넌트
+  - `LocationBottomSheet` : 경로 조회 실패 및 성공에 대한 바텀시트 ui
+  - `LocationBottomSheetContent` : 경로 조회 성공 여부에 따른 바텀 시트의 내용
+  - `LocationDetail` : 출발지와 도착지에 대한 정보를 알려주는 ui
+  - `LocationItem` : 출발지와 도착지에 대한 정보를 표시하고 클릭할 수 있는 컴포넌트
+  - `RouteName` : 지도 상에 출발지와 도착지를 알려주는 컴포넌트
+  - `TimeDistanceBox` : 지도 상에 경로에 대한 시간과 거리를 알려주는 컴포넌트
   
 - **screen**: 각 화면에 대한 UI를 정의합니다.
-  - 'MapActivity' : MapScreen을 불러오는 Activity
-  - 'MapScreen' : 지도를 보여주는 Map (경로와 출발지/도착지)
-  - 'RouteScreen' : 출발지와 도착지 목록을 표시하고, 사용자가 특정 경로를 클릭했을 때 LocationBottomSheet를 호출하여 해당 위치에 대한 경로 정보나 오류 메시지를 보여주는 화면을 구현
+  - `MapActivity` : MapScreen을 불러오는 Activity
+  - `MapScreen` : 지도를 보여주는 Map (경로와 출발지/도착지)
+  - `RouteScreen` : 출발지와 도착지 목록을 표시하고, 사용자가 특정 경로를 클릭했을 때 LocationBottomSheet를 호출하여 해당 위치에 대한 경로 정보나 오류 메시지를 보여주는 화면을 구현
   
 - **theme**: 앱의 전반적인 테마 및 스타일을 설정합니다.
 
