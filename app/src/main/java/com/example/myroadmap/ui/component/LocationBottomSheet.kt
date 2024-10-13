@@ -38,7 +38,7 @@ fun LocationBottomSheet(
                 .fillMaxWidth()
         ) {
             if (routesCheck) {
-                LocationBottomSheetContent(location, "경로 조회 결과", true)
+                LocationBottomSheetContent(location, "경로 정보", true)
                 Button(
                     onClick = {
                         onRouteCheck(location.origin, location.destination) {

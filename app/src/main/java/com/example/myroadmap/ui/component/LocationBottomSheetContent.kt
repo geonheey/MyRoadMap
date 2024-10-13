@@ -42,8 +42,8 @@ fun LocationBottomSheetContent(
                 LocationDetail(location)
             } else {
                 Text(
-                    text = "[${location.origin}~${location.destination}] : 경로가 존재하지 않습니다.",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = "[${location.origin} → ${location.destination}]",
+                    style = MaterialTheme.typography.labelLarge,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
