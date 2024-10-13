@@ -43,7 +43,7 @@ fun LocationBottomSheetContent(
             } else {
                 Text(
                     text = "[${location.origin} → ${location.destination}]",
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
