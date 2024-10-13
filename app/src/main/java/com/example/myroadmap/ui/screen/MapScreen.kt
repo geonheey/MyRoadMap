@@ -64,7 +64,7 @@ fun MapScreen(origin: String?, destination: String?, viewModel: InfoViewModel) {
                                     )
 
                                     if (routes.isEmpty()) {
-                                        Log.d("API_SUCCESS8", "No routes found.")
+                                        Log.d("API_SUCCESS", "No routes found.")
                                     } else {
                                         markRoutes(kakaoMap, routes, context)
                                         displayRoutes(kakaoMap, routes, context)
