@@ -16,8 +16,8 @@ import com.example.myroadmap.ui.theme.BlueText
 fun LocationDetail(location: Location) {
     Row {
         Text(
-            text = "출발지: ",
-            style = MaterialTheme.typography.bodySmall,
+            text = "출발지 : ",
+            style = MaterialTheme.typography.labelLarge,
         )
         Text(
             text = location.origin,
@@ -30,8 +30,8 @@ fun LocationDetail(location: Location) {
 
     Row {
         Text(
-            text = "도착지: ",
-            style = MaterialTheme.typography.bodySmall,
+            text = "도착지 : ",
+            style = MaterialTheme.typography.labelLarge,
         )
         Text(
             text = location.destination,

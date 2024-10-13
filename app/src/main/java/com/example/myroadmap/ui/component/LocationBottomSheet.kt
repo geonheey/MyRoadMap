@@ -38,12 +38,10 @@ fun LocationBottomSheet(
                 .fillMaxWidth()
         ) {
             if (routesCheck) {
-                LocationDisplay(location, "경로 조회 결과", true)
+                LocationBottomSheetContent(location, "경로 조회 결과", true)
                 Button(
                     onClick = {
-                        Log.d("LocationBottomSheet", "경로 확인 버튼 클릭됨")
                         onRouteCheck(location.origin, location.destination) {
-                            Log.d("LocationBottomSheet", "인텐트 시작")
                             val intent = Intent(context, MapActivity::class.java).apply {
                                 putExtra("ORIGIN", location.origin)
                                 putExtra("DESTINATION", location.destination)
@@ -58,7 +56,7 @@ fun LocationBottomSheet(
                     Text("경로 확인", color = Color.White)
                 }
             } else {
-                LocationDisplay(location, "경로 조회 실패", false, errorCode, errorMessage)
+                LocationBottomSheetContent(location, "경로 조회 실패", false, errorCode, errorMessage)
                 Button(
                     onClick = {
                         onDismiss()

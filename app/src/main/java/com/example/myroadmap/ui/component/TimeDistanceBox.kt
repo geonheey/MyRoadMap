@@ -32,7 +32,7 @@ fun TimeDistanceBox(routeTime: String, distance: String) {
             contentAlignment = Alignment.Center) {
             Text(
                 text = "시간 : $routeTime\n거리 : $distance",
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
             )
         }

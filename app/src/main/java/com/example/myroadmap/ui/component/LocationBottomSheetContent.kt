@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myroadmap.data.model.Location
 
 @Composable
-fun LocationDisplay(
+fun LocationBottomSheetContent(
     location: Location,
     title: String,
     isSuccessful: Boolean,
@@ -26,7 +26,7 @@ fun LocationDisplay(
 ) {
     Text(
         text = title,
-        style = MaterialTheme.typography.titleLarge,
+        style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onBackground,
         textAlign = TextAlign.Center,
         modifier = Modifier.padding(bottom = 12.dp)
@@ -49,16 +49,14 @@ fun LocationDisplay(
 
                 Text(
                     text = "Error Code: $errorCode",
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.error
                 )
                 Text(
                     text = "Error Message: $errorMessage",
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.error
                 )
-
-
             }
             Spacer(modifier = Modifier.height(16.dp))
 
