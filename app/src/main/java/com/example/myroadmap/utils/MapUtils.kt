@@ -3,10 +3,16 @@ package com.example.myroadmap.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.compose.ui.graphics.toArgb
 import com.example.myroadmap.R
 import com.example.myroadmap.data.model.RouteResponse
+import com.example.myroadmap.ui.theme.RouteBlock
+import com.example.myroadmap.ui.theme.RouteDelay
+import com.example.myroadmap.ui.theme.RouteJam
+import com.example.myroadmap.ui.theme.RouteNormal
+import com.example.myroadmap.ui.theme.RouteSlow
+import com.example.myroadmap.ui.theme.RouteUnknown
+import com.example.myroadmap.ui.theme.StrokeColor
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.LatLngBounds
@@ -38,18 +44,17 @@ fun displayRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Con
             LatLng.from(lat, lng)
         }
 
-        val colorResId = when (trafficState) {
-            "UNKNOWN" -> R.color.route_unknown
-            "BLOCK" -> R.color.route_block
-            "JAM" -> R.color.route_jam
-            "DELAY" -> R.color.route_delay
-            "SLOW" -> R.color.route_slow
-            "NORMAL" -> R.color.route_normal
-            else -> R.color.stroke_color
+        val color = when (trafficState) {
+            "UNKNOWN" -> RouteUnknown
+            "BLOCK" -> RouteBlock
+            "JAM" -> RouteJam
+            "DELAY" -> RouteDelay
+            "SLOW" -> RouteSlow
+            "NORMAL" -> RouteNormal
+            else -> StrokeColor
         }
 
-        val color = ContextCompat.getColor(context, colorResId)
-        val styles = RouteLineStyles.from(RouteLineStyle.from(16F, color))
+        val styles = RouteLineStyles.from(RouteLineStyle.from(16F, color.toArgb()))
 
         allSegments.add(RouteLineSegment.from(latLngs, styles))
     }
@@ -119,15 +124,15 @@ fun detailRoutes(distanceInMeters: Int, timeInSeconds: Int): Pair<String, String
     val seconds = timeInSeconds % 60
 
     val timeString = when {
-        hours > 0 -> String.format("%d 시 %d 분 %d 초", hours, minutes, seconds)
-        minutes > 0 -> String.format("%d 분 %d 초", minutes, seconds)
-        else -> String.format("%d 초", seconds)
+        hours > 0 -> String.format("%d시 %d분 %d초", hours, minutes, seconds)
+        minutes > 0 -> String.format("%d분 %d초", minutes, seconds)
+        else -> String.format("%d초", seconds)
     }
 
     val distanceString = if (distanceInMeters >= 1000) {
-        String.format("%.1f km", distanceInMeters / 1000.0)
+        String.format("%.1fkm", distanceInMeters / 1000.0)
     } else {
-        String.format("%d m", distanceInMeters)
+        String.format("%dm", distanceInMeters)
     }
 
     return Pair(timeString, distanceString)
