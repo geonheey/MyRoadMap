@@ -37,8 +37,14 @@
 - **screen**: 각 화면에 대한 UI를 정의합니다.
   - `MapActivity` : MapScreen을 불러오는 Activity
   - `MapScreen` : 지도를 보여주는 Map (경로와 출발지/도착지)
-  - `RouteScreen` : 출발지와 도착지 목록을 표시하고, 사용자가 특정 경로를 클릭했을 때 LocationBottomSheet를 호출하여 해당 위치에 대한 경로 정보나 오류 메시지를 보여주는 화면을 구현
-  
+  - `RouteScreen` :
+    - 출발지와 도착지 목록을 `LazyColumn`을 사용하여 스크롤 가능한 리스트로 구현
+    - 각 경로는 `LocationItem`을 호출하여 표시되며, 사용자가 특정 경로를 클릭했을 때 `LocationBottomSheet`를 호출
+    - 선택된 위치에 대한 경로 정보나 오류 메시지를 사용자에게 보여주는 기능 갖춤
+    - 경로 선택 시 `fetchRoutes` 메서드를 통해 경로 정보를 요청하고, 오류 발생 시 오류 메시지와 코드를 처리
+    - `LocationBottomSheet`에서 선택된 위치에 대한 자세한 정보를 보여주며, 경로 확인 기능도 포함됨
+
+
 - **theme**: 앱의 전반적인 테마 및 스타일을 설정합니다.
 
 ### Utils 패키지
