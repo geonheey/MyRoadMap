@@ -15,7 +15,7 @@ val BlueBox = Color(0xFF04243A)
 val YelloText = Color(0xFFFDD567)
 
 //도로 상태 색상
-val RouteUnknown = Color(0xFFE67F7E79)
+val RouteUnknown = Color(0xE67F7E79)
 val RouteBlock = Color(0xFFFD382A)
 val RouteJam = Color(0xFFFD382A)
 val RouteDelay = Color(0xFFF7AB17)
