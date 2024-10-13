@@ -29,7 +29,7 @@ fun LocationBottomSheetContent(
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.onBackground,
         textAlign = TextAlign.Center,
-        modifier = Modifier.padding(bottom = 12.dp)
+        modifier = Modifier.padding(bottom = 8.dp)
     )
     Box(
         modifier = Modifier
