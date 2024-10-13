@@ -7,10 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="distance_time_box">#0C196F</color>
-    <color name="distance_time_text">#FF9800</color>
-    <color name="my_primary">#FF184B36</color>
-    <!--    도로 상태 색상-->
+
+    <!-- 도로 상태 색상-->
     <color name="route_unknown">#E67F7E79</color>
     <color name="route_block">#FD382A</color>
     <color name="route_jam">#FD382A</color>
@@ -18,5 +16,10 @@
     <color name="route_slow">#F0D300</color>
     <color name="route_normal">#3BD72C</color>
     <color name="stroke_color">#FFFFFF</color>
+
+    <!-- 시간/거리 정보 색상-->
+    <color name="distance_time_box">#FF0055A4</color>
+    <color name="distance_time_text">#FFD700</color>
+
 
 </resources>

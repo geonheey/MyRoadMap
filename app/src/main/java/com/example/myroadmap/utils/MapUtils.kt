@@ -111,13 +111,9 @@ fun markRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Contex
 
 }
 
+
 @SuppressLint("DefaultLocale")
-fun detailRoutes(
-    timeTextView: TextView,
-    distanceTextView: TextView,
-    distanceInMeters: Int,
-    timeInSeconds: Int
-) {
+fun detailRoutes(distanceInMeters: Int, timeInSeconds: Int): Pair<String, String> {
     val hours = timeInSeconds / 3600
     val minutes = (timeInSeconds % 3600) / 60
     val seconds = timeInSeconds % 60
@@ -127,12 +123,12 @@ fun detailRoutes(
         minutes > 0 -> String.format("%d 분 %d 초", minutes, seconds)
         else -> String.format("%d 초", seconds)
     }
+
     val distanceString = if (distanceInMeters >= 1000) {
         String.format("%.1f km", distanceInMeters / 1000.0)
     } else {
         String.format("%d m", distanceInMeters)
     }
 
-    timeTextView.text = "시간 : $timeString"
-    distanceTextView.text = "거리 : $distanceString"
+    return Pair(timeString, distanceString)
 }

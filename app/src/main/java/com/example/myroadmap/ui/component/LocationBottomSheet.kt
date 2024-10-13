@@ -1,6 +1,7 @@
 package com.example.myroadmap.ui.component
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.myroadmap.ui.screen.MapActivity
 import com.example.myroadmap.data.model.Location
+import com.example.myroadmap.ui.screen.MapActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +41,9 @@ fun LocationBottomSheet(
                 LocationDisplay(location, "경로 조회 결과", true)
                 Button(
                     onClick = {
+                        Log.d("LocationBottomSheet", "경로 확인 버튼 클릭됨")
                         onRouteCheck(location.origin, location.destination) {
+                            Log.d("LocationBottomSheet", "인텐트 시작")
                             val intent = Intent(context, MapActivity::class.java).apply {
                                 putExtra("ORIGIN", location.origin)
                                 putExtra("DESTINATION", location.destination)
