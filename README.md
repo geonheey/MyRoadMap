@@ -38,7 +38,7 @@
   - `MapActivity` : MapScreen을 불러오는 Activity
   - `MapScreen` : 지도를 보여주는 Map (경로와 출발지/도착지)
   - `RouteScreen` :
-    - 출발지와 도착지 목록을 `LazyColumn`을 사용하여 스크롤 가능한 리스트로 구현
+    - 출발지와 도착지 목록을 `LazyColumn`을 사용하여 스크롤 가능한 리스트로 구현하였습니다.
     - 각 경로는 `LocationItem`을 호출하여 표시되며, 사용자가 특정 경로를 클릭했을 때 `LocationBottomSheet`를 호출합니다.
     - 선택된 위치에 대한 경로 정보나 오류 메시지를 사용자에게 보여주는 기능 갖추고 있습니다.
     - 경로 선택 시 `fetchRoutes` 메서드를 통해 경로 정보를 요청하고, 오류 발생 시 오류 메시지와 코드를 처리합니다.
