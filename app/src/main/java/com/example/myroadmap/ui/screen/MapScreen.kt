@@ -3,6 +3,7 @@ package com.example.myroadmap.ui.screen
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,9 +12,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewModelScope
 import com.example.myroadmap.BuildConfig
+import com.example.myroadmap.ui.component.RouteName
 import com.example.myroadmap.ui.component.TimeDistanceBox
 import com.example.myroadmap.ui.theme.MyRoadMapTheme
 import com.example.myroadmap.utils.detailRoutes
@@ -76,12 +79,21 @@ fun MapScreen(origin: String?, destination: String?, viewModel: InfoViewModel) {
                     })
                 }
             )
+            if (origin != null && destination != null) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(16.dp)
+                ) {
+                    RouteName(origin = origin, destination = destination)
+                }
+            }
             Box(
-                modifier = Modifier.align(Alignment.BottomEnd)
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
             ) {
                 TimeDistanceBox(routeTimeText, distanceText)
             }
         }
     }
 }
-

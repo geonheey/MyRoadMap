@@ -11,6 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 //경로 시간/거리 정보 색상
+val BlueText = Color(0xFF08416C)
 val BlueBox = Color(0xFF04243A)
 val YelloText = Color(0xFFFDD567)
 

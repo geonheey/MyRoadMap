@@ -49,6 +49,7 @@ fun LocationBottomSheet(
                                 putExtra("DESTINATION", location.destination)
                             }
                             context.startActivity(intent)
+                            onDismiss()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),

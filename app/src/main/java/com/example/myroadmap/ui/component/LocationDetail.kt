@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.myroadmap.data.model.Location
+import com.example.myroadmap.ui.theme.BlueBox
+import com.example.myroadmap.ui.theme.BlueText
 
 @Composable
 fun LocationDetail(location: Location) {
@@ -20,6 +22,7 @@ fun LocationDetail(location: Location) {
         Text(
             text = location.origin,
             style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 
@@ -33,6 +36,7 @@ fun LocationDetail(location: Location) {
         Text(
             text = location.destination,
             style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.tertiary
         )
     }
 }

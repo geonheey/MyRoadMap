@@ -51,8 +51,8 @@ val MyTypography = Typography(
     ),
     titleSmall = TextStyle(
         fontFamily = font,
-        fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 13.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
