@@ -21,18 +21,29 @@
     - `fetchDistanceTime`: 출발지와 도착지의 거리 및 시간을 조회하는 메서드
 
 - **service**: API와의 통신을 담당합니다.
-  - `ApiService`: 출발지 / 도착지 리스트 API, 경로 조회 API, 시간 / 거리 조회 API 메서드가 포함되어 있습니다.
-  - `RetrofitClient`: Retrofit을 사용하여 API 호출을 관리합니다.
+  - `ApiService`: 출발지 / 도착지 리스트 API, 경로 조회 API, 시간 / 거리 조회 API 메서드
+  - `RetrofitClient`: Retrofit을 사용하여 API 호출을 관리
 
 ### UI 패키지
 
 - **component**: UI 구성 요소를 포함합니다.
+  - 'LocationBottomSheet' : 경로 조회 실패 및 성공에 대한 바텀시트 ui
+  - 'LocationBottomSheetContent' : 경로 조회 성공 여부에 따른 바텀 시트의 내용
+  - 'LocationDetail' : 출발지와 도착지에 대한 정보를 알려주는 ui
+  - 'LocationItem' : 출발지와 도착지에 대한 정보를 표시하고 클릭할 수 있는 컴포넌트
+  - 'RouteName' : 지도 상에 출발지와 도착지를 알려주는 컴포넌트
+  - 'TimeDistanceBox' : 지도 상에 경로에 대한 시간과 거리를 알려주는 컴포넌트
+  
 - **screen**: 각 화면에 대한 UI를 정의합니다.
+  - 'MapActivity' : MapScreen을 불러오는 Activity
+  - 'MapScreen' : 지도를 보여주는 Map (경로와 출발지/도착지)
+  - 'RouteScreen' : 출발지와 도착지 목록을 표시하고, 사용자가 특정 경로를 클릭했을 때 LocationBottomSheet를 호출하여 해당 위치에 대한 경로 정보나 오류 메시지를 보여주는 화면을 구현
+  
 - **theme**: 앱의 전반적인 테마 및 스타일을 설정합니다.
 
 ### Utils 패키지
 
-- **MapUtils**: 
+**MapUtils**: 
 #### 주요 메서드
 1. **displayRoutes(kakaoMap: KakaoMap?, routes: List<RouteResponse>, context: Context)**:
    - 주어진 경로 리스트를 KakaoMap에 표시합니다.
@@ -49,10 +60,10 @@
    - 거리는 킬로미터 또는 미터로 표시되며, 시간은 시, 분, 초 형식으로 반환됩니다.
 
 ### ViewModel
-- **InfoViewModel**: 
+**InfoViewModel**: 
 
 ViewModel은 UI 관련 데이터를 관리하고, UI와 데이터 간의 상호작용을 담당합니다.
- - 위치 정보를 비동기로 가져오는 메서드(`fetchLocations`)를 포함하고, 
+ - 출발지와 도착지 정보를 비동기로 가져오는 메서드(`fetchLocations`)를 포함하고, 
  - 출발지와 도착지에 대한 경로(`fetchRoutes`) 및 거리 및 시간(`fetchDistanceTime`) 정보를 가져오는 메서드를 제공합니다.
  - 상태 흐름(StateFlow)을 사용하여 UI에 위치 리스트를 제공하며, API 호출 성공 시 로그에 결과를 기록합니다.
 
