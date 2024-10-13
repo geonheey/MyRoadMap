@@ -95,6 +95,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.recyclerview.v121)
+    implementation("androidx.test.espresso:espresso-core:3.6.1")
 
     // 스플래시 화면
     implementation(libs.androidx.core.splashscreen)
