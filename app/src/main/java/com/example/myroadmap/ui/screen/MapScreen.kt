@@ -15,6 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewModelScope
 import com.example.myroadmap.BuildConfig
 import com.example.myroadmap.ui.component.TimeDistanceBox
+import com.example.myroadmap.ui.theme.MyRoadMapTheme
 import com.example.myroadmap.utils.detailRoutes
 import com.example.myroadmap.utils.displayRoutes
 import com.example.myroadmap.utils.markRoutes
@@ -33,52 +34,53 @@ fun MapScreen(origin: String?, destination: String?, viewModel: InfoViewModel) {
 
     var distanceText by remember { mutableStateOf("") }
     var routeTimeText by remember { mutableStateOf("") }
+    MyRoadMapTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
+            AndroidView(
+                factory = { mapView },
+                modifier = Modifier.fillMaxSize(),
+                update = {
+                    it.start(object : MapLifeCycleCallback() {
+                        override fun onMapDestroy() {}
+                        override fun onMapError(p0: Exception?) {
+                            Log.e("KakaoMap", "onMapError: ${p0?.message}")
+                        }
+                    }, object : KakaoMapReadyCallback() {
+                        override fun onMapReady(kakaoMap: KakaoMap) {
+                            if (origin != null && destination != null) {
+                                viewModel.viewModelScope.launch {
+                                    val routes = viewModel.fetchRoutes(
+                                        BuildConfig.AUTHORIZATION_KEY,
+                                        origin,
+                                        destination
+                                    )
+                                    val (distance, time) = viewModel.fetchDistanceTime(
+                                        BuildConfig.AUTHORIZATION_KEY,
+                                        origin,
+                                        destination
+                                    )
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        AndroidView(
-            factory = { mapView },
-            modifier = Modifier.fillMaxSize(),
-            update = {
-                it.start(object : MapLifeCycleCallback() {
-                    override fun onMapDestroy() {}
-                    override fun onMapError(p0: Exception?) {
-                        Log.e("KakaoMap", "onMapError: ${p0?.message}")
-                    }
-                }, object : KakaoMapReadyCallback() {
-                    override fun onMapReady(kakaoMap: KakaoMap) {
-                        if (origin != null && destination != null) {
-                            viewModel.viewModelScope.launch {
-                                val routes = viewModel.fetchRoutes(
-                                    BuildConfig.AUTHORIZATION_KEY,
-                                    origin,
-                                    destination
-                                )
-                                val (distance, time) = viewModel.fetchDistanceTime(
-                                    BuildConfig.AUTHORIZATION_KEY,
-                                    origin,
-                                    destination
-                                )
+                                    if (routes.isEmpty()) {
+                                        Log.d("API_SUCCESS8", "No routes found.")
+                                    } else {
+                                        markRoutes(kakaoMap, routes, context)
+                                        displayRoutes(kakaoMap, routes, context)
 
-                                if (routes.isEmpty()) {
-                                    Log.d("API_SUCCESS8", "No routes found.")
-                                } else {
-                                    markRoutes(kakaoMap, routes, context)
-                                    displayRoutes(kakaoMap, routes, context)
-
-                                    val (distText, timeString) = detailRoutes(distance, time)
-                                    distanceText = distText
-                                    routeTimeText = timeString
+                                        val (distText, timeString) = detailRoutes(distance, time)
+                                        distanceText = distText
+                                        routeTimeText = timeString
+                                    }
                                 }
                             }
                         }
-                    }
-                })
+                    })
+                }
+            )
+            Box(
+                modifier = Modifier.align(Alignment.BottomEnd)
+            ) {
+                TimeDistanceBox(routeTimeText, distanceText)
             }
-        )
-        Box(
-            modifier = Modifier.align(Alignment.BottomEnd)
-        ) {
-            TimeDistanceBox(routeTimeText, distanceText)
         }
     }
 }
