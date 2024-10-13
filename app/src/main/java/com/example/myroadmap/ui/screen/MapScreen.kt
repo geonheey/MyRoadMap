@@ -92,7 +92,7 @@ fun MapScreen(origin: String?, destination: String?, viewModel: InfoViewModel) {
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
             ) {
-                TimeDistanceBox(routeTimeText, distanceText)
+                TimeDistanceBox(distanceText, routeTimeText)
             }
         }
     }

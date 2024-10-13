@@ -135,5 +135,5 @@ fun detailRoutes(distanceInMeters: Int, timeInSeconds: Int): Pair<String, String
         String.format("%dm", distanceInMeters)
     }
 
-    return Pair(timeString, distanceString)
+    return Pair(distanceString, timeString)
 }

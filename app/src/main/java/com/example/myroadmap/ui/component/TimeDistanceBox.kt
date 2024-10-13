@@ -18,7 +18,7 @@ import com.example.myroadmap.ui.theme.BlueBox
 import com.example.myroadmap.ui.theme.YelloText
 
 @Composable
-fun TimeDistanceBox(routeTime: String, distance: String) {
+fun TimeDistanceBox(distance: String, routeTimeText: String) {
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -31,7 +31,7 @@ fun TimeDistanceBox(routeTime: String, distance: String) {
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             contentAlignment = Alignment.Center) {
             Text(
-                text = "시간 : $routeTime\n거리 : $distance",
+                text = "시간 : $routeTimeText\n거리 : $distance",
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
             )
